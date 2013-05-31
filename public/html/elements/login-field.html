@@ -1,0 +1,24 @@
+<element name="login-field" attributes="message">
+
+    <link rel="stylesheet" href="/css/elements/login-field.css" type="text/css" charset="utf-8"/>
+    <style>
+        @import url(http://fonts.googleapis.com/css?family=Muli);
+    </style>
+
+    <template>
+        <span>I'm <b>login-field</b>. {{message}}</span>
+        <p>
+            <span id="foo">blubb</span>
+        </p>
+    </template>
+    <script>
+        Polymer.register(this, {
+            message: "Message",
+
+            ready: function() {
+                console.log(this.message);
+                this.$.foo.innerHTML = "bar";
+            }
+        });
+    </script>
+</element>
