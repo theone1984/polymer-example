@@ -2,16 +2,13 @@
 <html>
 <head>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.1/jquery.min.js"></script>
-    <script src="/js/vendor/bootstrap.js"></script>
     <script src="/js/vendor/polymer.min.js"></script>
 
     <link rel="import" href="/html/elements/login-field.html">
-
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
 </head>
 <body>
 
-<login-field id="login-field" placeholder="Login name" style="border: 1px solid black;">
+<login-field id="login-field" placeholder="Type here ..." style="border: 1px solid black;">
     <span class="name" id="test">Login name</span>
     <span class="password">Password</span>
     <!-- Active insertion point -->
@@ -19,6 +16,7 @@
 </login-field>
 
 <p>Lorem ipsum</p>
+
 <p>dolor amet</p>
 
 <script>
@@ -32,10 +30,22 @@
         dispatcherElement.dispatchEvent(event);
     }
 
+    tryLogin = function(loginData, callback) {
+        var request = $.post('/login', loginData);
+
+        request.done(function(eventArgs) {
+            callback.call(window, {success: true, data: eventArgs });
+        });
+        request.fail(function(eventArgs) {
+            callback.call(window, {success: false, error: eventArgs });
+        });
+    };
+
     document.getElementById('login-field').addEventListener('login-attempt', function(eventArgs) {
         document.getElementById('submit-button').innerText = "Submit again";
-        // TODO invoke real XML HTTP request
-        dispatchEvent(document.getElementById('login-field'), 'loginResult', {success: true});
+        tryLogin(eventArgs.detail, function(result) {
+            dispatchEvent(document.getElementById('login-field'), 'loginResult', result);
+        });
     });
 
 </script>

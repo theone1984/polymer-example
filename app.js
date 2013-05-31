@@ -34,10 +34,16 @@ app.configure('development', function() {
     app.use(express.errorHandler());
 });
 
-app.get('/login', function(req, res) {
-    res.render('index.html', {
-        title: 'Home'
-    });
+app.post('/login', function(req, res) {
+    var loginData = req.body;
+
+    if (loginData.loginName === 'admin' && loginData.loginPassword === 'admin') {
+        console.log('Login successful');
+        res.send({success: true}, 200);
+    } else {
+        console.log('Login unsuccessful');
+        res.send({success: false}, 403);
+    }
 });
 
 http.createServer(app).listen(app.get('port'), function() {
