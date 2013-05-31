@@ -5,25 +5,30 @@
     </style>
 
     <template>
-        <p>
-            <label for="login-name">
-                <content select=".name"></content>
-                :
-            </label>
-            <input type="text" name="login-name" id="login-name" placeholder="{{placeholder}}"/>
-        </p>
-        <p>
-            <label for="login-password">
-                <content select=".password"></content>
-                :
-            </label>
-            <input type="password" name="login-password" id="login-password" placeholder="{{placeholder}}"/>
-        </p>
-        <p>
-            <button id="submit-button">
-                <content select=".submit"></content>
-            </button>
-        </p>
+        <div id="login-box">
+            <p>
+                <label for="login-name">
+                    <content select=".name"></content>
+                    :
+                </label>
+                <input type="text" name="login-name" id="login-name" placeholder="{{placeholder}}"/>
+            </p>
+            <p>
+                <label for="login-password">
+                    <content select=".password"></content>
+                    :
+                </label>
+                <input type="password" name="login-password" id="login-password" placeholder="{{placeholder}}"/>
+            </p>
+            <p>
+                <button id="login-button">
+                    <content select=".submit"></content>
+                </button>
+            </p>
+        </div>
+        <div id="loggedin-box" style="display: none;">
+            <content select=".loggedin"></content>
+        </div>
     </template>
 
     <script>
@@ -39,7 +44,7 @@
             placeholder: "Login",
 
             ready: function() {
-                this.$['submit-button'].addEventListener('click', scopedCallback(this, this.buttonClickEventHandler));
+                this.$['login-button'].addEventListener('click', scopedCallback(this, this.buttonClickEventHandler));
                 //this.$['submit-button'].addEventListener('loginResult', scopedCallback(this, this.loginResultEventHandler));
                 this.addEventListener('loginResult', scopedCallback(this, this.loginResultEventHandler));
             },
@@ -53,7 +58,14 @@
             },
 
             loginResultEventHandler: function(eventArgs) {
-                console.log(eventArgs.detail);
+                var data = eventArgs.detail;
+
+                if (data.success) {
+                    this.$['login-box'].style.display = 'none';
+                    this.$['loggedin-box'].style.display = 'block';
+                } else {
+                    this.$['login-box'].setAttribute('class', 'login-not-successful');
+                }
             },
 
             dispatchGlobalEvent: function(eventType, eventArgs) {
