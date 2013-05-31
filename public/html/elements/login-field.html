@@ -1,24 +1,66 @@
-<element name="login-field" attributes="message">
-
+<element name="login-field" attributes="placeholder">
     <link rel="stylesheet" href="/css/elements/login-field.css" type="text/css" charset="utf-8"/>
     <style>
         @import url(http://fonts.googleapis.com/css?family=Muli);
     </style>
 
     <template>
-        <span>I'm <b>login-field</b>. {{message}}</span>
         <p>
-            <span id="foo">blubb</span>
+            <label for="login-name">
+                <content select=".name"></content>
+                :
+            </label>
+            <input type="text" name="login-name" id="login-name" placeholder="{{placeholder}}"/>
+        </p>
+        <p>
+            <label for="login-password">
+                <content select=".password"></content>
+                :
+            </label>
+            <input type="password" name="login-password" id="login-password" placeholder="{{placeholder}}"/>
+        </p>
+        <p>
+            <button id="submit-button">
+                <content select=".submit"></content>
+            </button>
         </p>
     </template>
+
     <script>
+
+        scopedCallback = function(scope, callback) {
+            return function() {
+                callback.apply(scope, arguments);
+            };
+        };
+
+        dispatchGlobalEvent = function(dispatcherElement, eventType, eventArgs) {
+            var event = new CustomEvent(eventType, {
+                detail: eventArgs,
+                bubbles: true,
+                cancelable: true
+            });
+
+            dispatcherElement.dispatchEvent(event);
+        }
+
         Polymer.register(this, {
-            message: "Message",
+            root: this,
+
+            placeholder: "Login",
 
             ready: function() {
-                console.log(this.message);
-                this.$.foo.innerHTML = "bar";
+                this.$['submit-button'].addEventListener('click', scopedCallback(this, this.buttonClickEventHandler));
+            },
+
+            buttonClickEventHandler: function() {
+                var loginName, loginPassword;
+                loginName = this.$['login-name'].value;
+                loginPassword = this.$['login-password'].value;
+
+                dispatchGlobalEvent(this.$['submit-button'], 'login-attempt', { loginName: loginName, loginPassword: loginPassword });
             }
         });
+
     </script>
 </element>

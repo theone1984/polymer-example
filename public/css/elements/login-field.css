@@ -1,13 +1,23 @@
 @host {
-    * {
+    login-field {
         display: inline-block;
-        padding-top: 40px;
 
         font-family: 'Muli', sans-serif;
-        font-size: 40pt;
+        font-size: 11pt;
+    }
+
+    * {
+        padding: 5px;
     }
 }
 
-span {
-    color: red;
+p {
+    color: darkblue;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+label {
+    display: inline-block;
+    width: 85px;
 }

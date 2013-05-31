@@ -5,15 +5,29 @@
     <script src="/js/vendor/bootstrap.js"></script>
     <script src="/js/vendor/polymer.min.js"></script>
 
-
     <link rel="import" href="/html/elements/login-field.html">
 
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
 </head>
 <body>
-<login-field message="User defined message"></login-field>
 
-<span>Another span</span>
+<login-field id="login-field" placeholder="Login name" style="border: 1px solid black;">
+    <span class="name" id="test">Login name</span>
+    <span class="password">Password</span>
+    <!-- Active insertion point -->
+    <span class="submit" id="submit-button">Submit</span>
+</login-field>
+
+<p>Lorem ipsum</p>
+<p>dolor amet</p>
+
+<script>
+    document.getElementById('login-field').addEventListener('login-attempt', function(eventArgs) {
+        console.log(eventArgs.detail);
+        document.getElementById('submit-button').innerText = "Submit again";
+    });
+
+</script>
 
 </body>
 </html>
