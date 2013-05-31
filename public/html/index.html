@@ -22,9 +22,20 @@
 <p>dolor amet</p>
 
 <script>
+    dispatchEvent = function(dispatcherElement, eventType, eventArgs) {
+        var event = new CustomEvent(eventType, {
+            detail: eventArgs,
+            bubbles: true,
+            cancelable: true
+        });
+
+        dispatcherElement.dispatchEvent(event);
+    }
+
     document.getElementById('login-field').addEventListener('login-attempt', function(eventArgs) {
-        console.log(eventArgs.detail);
         document.getElementById('submit-button').innerText = "Submit again";
+        // TODO invoke real XML HTTP request
+        dispatchEvent(document.getElementById('login-field'), 'loginResult', {success: true});
     });
 
 </script>
