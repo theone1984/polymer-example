@@ -8,15 +8,19 @@
         };
 
         Polymer.register(this, {
-            addResultEventHandler: function() {
-                this.addEventListener('loginResult', scopedCallback(this, this.animatedLoginResultEventHandler));
+
+            loginResultEventHandler: function(eventArgs) {
+                var data = eventArgs.detail;
+
+                if (!data.success) {
+                    this.super([eventArgs]);
+                } else {
+                    this.animateBox();
+                }
             },
 
-            animatedLoginResultEventHandler: function(eventArgs) {
-                eventArgs.stopPropagation();
-                eventArgs.preventDefault();
+            animateBox: function() {
 
-                return false;
             }
         });
     </script>
