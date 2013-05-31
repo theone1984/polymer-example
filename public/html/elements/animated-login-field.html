@@ -1,5 +1,6 @@
 <element name="animated-login-field" extends="login-field">
     <link rel="stylesheet" href="/css/elements/login-field.css" type="text/css" charset="utf-8"/>
+
     <script>
         scopedCallback = function(scope, callback) {
             return function() {
@@ -9,17 +10,28 @@
 
         Polymer.register(this, {
 
+            animationFunction: new PathAnimationEffect(document.querySelector('#path')),
+
             loginResultEventHandler: function(eventArgs) {
                 var data = eventArgs.detail;
 
-                if (!data.success) {
+                /*if (!data.success) {
                     this.super([eventArgs]);
-                } else {
+                } else {*/
                     this.animateBox();
-                }
+                //}
             },
 
             animateBox: function() {
+                targetElement = this.$['login-box'];
+
+                var player = document.timeline.play(new Animation(targetElement, {
+                    opacity: ["1.0", "0.0f"],
+                    transform: ["scale(1.0f)", "scale(0.0f)"]
+                }, {
+                    direction: "alternate", duration: 0.5
+                }));
+
 
             }
         });

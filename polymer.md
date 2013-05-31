@@ -17,3 +17,5 @@ Insertion points (content elements) are limited to:
 * attribute selector(s)
 
 Document and window are still the same in the shadow tree, only selectors and parents have changed.
+
+this.super() needs an array as argument
