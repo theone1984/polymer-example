@@ -5,21 +5,31 @@
     <script src="/js/vendor/polymer.min.js"></script>
 
     <link rel="import" href="/html/elements/login-field.html">
+    <link rel="import" href="/html/elements/animated-login-field.html">
 </head>
 <body>
 
-<login-field id="login-field" placeholder="Type here ..." style="border: 1px solid black;">
+<animated-login-field id="login-field" placeholder="Type here ..." style="border: 1px solid black;">
     <span class="name" id="test">Login name</span>
     <span class="password">Password</span>
     <!-- Active insertion point -->
     <span class="submit" id="submit-button">Submit</span>
 
     <span class="loggedin">You are now logged in</span>
-</login-field>
+</animated-login-field>
 
 <p>Lorem ipsum</p>
 
 <p>dolor amet</p>
+
+<login-field id="login-field1" placeholder="Type here ..." style="border: 1px solid black;">
+    <span class="name">Login name</span>
+    <span class="password">Password</span>
+    <!-- Active insertion point -->
+    <span class="submit">Submit</span>
+
+    <span class="loggedin">You are now logged in</span>
+</login-field>
 
 <script>
     dispatchEvent = function(dispatcherElement, eventType, eventArgs) {

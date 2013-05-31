@@ -1,0 +1,23 @@
+<element name="animated-login-field" extends="login-field">
+    <link rel="stylesheet" href="/css/elements/login-field.css" type="text/css" charset="utf-8"/>
+    <script>
+        scopedCallback = function(scope, callback) {
+            return function() {
+                callback.apply(scope, arguments);
+            };
+        };
+
+        Polymer.register(this, {
+            addResultEventHandler: function() {
+                this.addEventListener('loginResult', scopedCallback(this, this.animatedLoginResultEventHandler));
+            },
+
+            animatedLoginResultEventHandler: function(eventArgs) {
+                eventArgs.stopPropagation();
+                eventArgs.preventDefault();
+
+                return false;
+            }
+        });
+    </script>
+</element>

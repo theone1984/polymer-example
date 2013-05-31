@@ -46,6 +46,10 @@
             ready: function() {
                 this.$['login-button'].addEventListener('click', scopedCallback(this, this.buttonClickEventHandler));
                 //this.$['submit-button'].addEventListener('loginResult', scopedCallback(this, this.loginResultEventHandler));
+                this.addResultEventHandler();
+            },
+
+            addResultEventHandler: function() {
                 this.addEventListener('loginResult', scopedCallback(this, this.loginResultEventHandler));
             },
 
