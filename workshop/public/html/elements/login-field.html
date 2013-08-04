@@ -49,7 +49,17 @@
                 loginName = this.$['login-name'].value;
                 loginPassword = this.$['login-password'].value;
 
-                alert("Button clicked with values " + loginName + "/" + loginPassword);
+                this.dispatchGlobalEvent('login-attempt', { loginName: loginName, loginPassword: loginPassword });
+            },
+
+            dispatchGlobalEvent: function(eventType, eventArgs) {
+                var event = new CustomEvent(eventType, {
+                    detail: eventArgs,
+                    bubbles: true,
+                    cancelable: true
+                });
+
+                this.dispatchEvent(event);
             }
         });
     </script>

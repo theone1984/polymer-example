@@ -224,7 +224,7 @@ Insertion points (content elements) are limited to:
 
 ## Basic event handlers
 
-Explain this.$
+Explain this.$ (only useful when dealing with IDs)
 
 Add scoped callback helper function:
 
@@ -264,4 +264,64 @@ alert("Button clicked with values " + loginName + "/" + loginPassword);
 ```
 
 **Show the page, enter user/password into the fields and press the button**
+
+## Advanced event handlers part I
+
+Integrate a method for dispatching events on the element itself into login-field.html:
+
+```javascript
+dispatchGlobalEvent: function(eventType, eventArgs) {
+    var event = new CustomEvent(eventType, {
+        detail: eventArgs,
+        bubbles: true,
+        cancelable: true
+    });
+    this.dispatchEvent(event);
+}
+```
+
+Instead of sending an alert, dispatch the button click event:
+
+```javascript
+this.dispatchGlobalEvent('login-attempt', { loginName: loginName, loginPassword: loginPassword });
+```
+
+Catch the event in index.html (within the <scripts> element) and log the details:
+
+```javascript
+document.getElementById('login').addEventListener('login-attempt', function(eventArgs) {
+    console.log(eventArgs.detail);
+});
+```
+
+Create a function tryLogin() to communicate with the server:
+
+```
+tryLogin = function(loginData, callback) {
+    var request = $.post('/login', loginData);
+
+    request.done(function(eventArgs) {
+        callback.call(window, {success: true, data: eventArgs });
+    });
+    request.fail(function(eventArgs) {
+        callback.call(window, {success: false, error: eventArgs });
+    });
+};
+```
+
+(Explain the jQuery post funtion() and its callbacks in short)
+
+Call the tryLogin() function when getting user data:
+
+```
+document.getElementById('login').addEventListener('login-attempt', function(eventArgs) {
+    tryLogin(eventArgs.detail, function(result) {
+        alert(result.success ? "Login successful" : "Login not successful");
+    });
+});
+```
+
+**Show the page, enter wrong credentials, show the result, enter correct credential, show the result**
+
+
 
