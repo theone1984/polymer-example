@@ -139,3 +139,41 @@ The @host at-rule allows you to select and style the element hosting a shadow tr
 
 ** Show the page **
 
+## Attributes and data binding
+
+Add attribute to element tag in login-field.html:
+
+`<element name="login-field" attributes="placeholder">`
+
+Assign a default value for the attribute in the script section:
+
+```javascript
+Polymer.register(this, {
+    root: this,
+    placeholder: "...",
+    ready: function() {
+    }
+});
+```
+
+Use the attrbute in the template:
+
+```html
+<input type="text" name="login-name" id="login-name" placeholder="{{placeholder}}"/>
+<input type="password" name="login-password" id="login-password" placeholder="{{placeholder}}"/>
+```
+
+** Show the page (default attribute) **
+
+Assign an attribute value in index.html:
+
+```html
+<login-field id="login" placeholder="Type here..."></login-field>
+```
+
+** Show the page (assigned attribute) **
+
+Explain that when the value of placeholder changes (either in the DOM or in JavaScript), both values are synchronized.
+
+
+
