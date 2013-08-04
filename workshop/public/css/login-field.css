@@ -1,0 +1,11 @@
+@host {
+    login-field {
+        font-family: 'Muli', sans-serif;
+        font-size: 11pt;
+    }
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+}

@@ -44,6 +44,8 @@ Link to the element in index.html:
 
 ``<link rel="import" href="/html/elements/login-field.html">``
 
+Explain why you need a web server to do this
+
 Create basic structure in login-field.html:
 
 ```html
@@ -68,4 +70,72 @@ Create hello world text in the element template:
 ``<p>Hello world</p>``
 
 **Show the page**
+
+## Integrate basic login form
+
+### Login form
+
+Create login form template:
+
+```html
+<div id="login-box">
+    <p>
+        <label for="login-name">Login name:</label>
+        <input type="text" name="login-name" id="login-name" />
+    </p>
+    <p>
+        <label for="login-password">Password:</label>
+        <input type="password" name="login-password" id="login-password" />
+    </p>
+    <p>
+        <button id="login-button">Submit</button>
+    </p>
+</div>
+```
+
+** Show the page **
+
+### Basic stylesheets
+
+Add stylesheet to element (directly after the element declaration):
+
+``<link rel="stylesheet" href="/css/elements/login-field.css" type="text/css" charset="utf-8"/>``
+
+Explain why you need a web server to do this
+
+Create styles for the login form:
+
+``label {
+    display: inline-block;
+    width: 100px;
+}``
+
+** Show the page **
+
+### Web fonts
+
+Add link to font stylesheet:
+
+```html
+<style>
+    @import url(http://fonts.googleapis.com/css?family=Muli);
+</style>
+```
+
+CORS stylesheet lookup only works when using CSS @import directives inline.
+
+Use font in stylesheet:
+
+```css
+@host {
+    login-field {
+        font-family: 'Muli', sans-serif;
+        font-size: 11pt;
+    }
+}
+```
+
+The @host at-rule allows you to select and style the element hosting a shadow tree.
+
+** Show the page **
 
