@@ -175,5 +175,50 @@ Assign an attribute value in index.html:
 
 Explain that when the value of placeholder changes (either in the DOM or in JavaScript), both values are synchronized.
 
+## Insertion points (example i18n)
 
+Change login name, login password and login button to in login-field.html to:
+
+```html
+<p>
+    <label for="login-name">
+        <content select=".name"></content>:
+    </label>
+    <input type="text" name="login-name" id="login-name" placeholder="{{placeholder}}"/>
+</p>
+<p>
+    <label for="login-password">
+        <content select=".password"></content>:
+    </label>
+    <input type="password" name="login-password" id="login-password" placeholder="{{placeholder}}"/>
+</p>
+<p>
+    <button id="login-button">
+        <content select=".submit"></content>
+    </button>
+</p>
+```
+
+(Insert "<content select="selector"></content>" for login name, password and login button)
+
+Insert the content elements in index.html (don't forget the placeholder):
+
+```
+<login-field id="login" placeholder="Bitte hier tippen ...">
+    <span class="name">Login-Name</span>
+    <span class="password">Passwort</span>
+    <span class="submit">Abschicken</span>
+</login-field>
+```
+
+The **elements** using the selector are inserted into the DOM.
+
+Insertion points (content elements) are limited to:
+
+* A type selector or a universal selector
+* class selector(s)
+* An ID selector
+* attribute selector(s)
+
+** Show the page **
 

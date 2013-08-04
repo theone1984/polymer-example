@@ -8,15 +8,21 @@
     <template>
         <div id="login-box">
             <p>
-                <label for="login-name">Login name:</label>
+                <label for="login-name">
+                    <content select=".name"></content>:
+                </label>
                 <input type="text" name="login-name" id="login-name" placeholder="{{placeholder}}"/>
             </p>
             <p>
-                <label for="login-password">Password:</label>
+                <label for="login-password">
+                    <content select=".password"></content>:
+                </label>
                 <input type="password" name="login-password" id="login-password" placeholder="{{placeholder}}"/>
             </p>
             <p>
-                <button id="login-button">Submit</button>
+                <button id="login-button">
+                    <content select=".submit"></content>
+                </button>
             </p>
         </div>
     </template>
