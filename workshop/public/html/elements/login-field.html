@@ -27,6 +27,9 @@
                 </button>
             </p>
         </div>
+        <div id="loggedin-box" style="display: none;">
+            <content select=".loggedin"></content>
+        </div>
     </template>
 
     <script>
@@ -38,10 +41,12 @@
 
         Polymer.register(this, {
             root: this,
+
             placeholder: "...",
 
             ready: function() {
                 this.$['login-button'].addEventListener('click', scopedCallback(this, this.buttonClickEventHandler));
+                this.addEventListener('loginResult', scopedCallback(this, this.loginResultEventHandler));
             },
 
             buttonClickEventHandler: function() {
@@ -50,6 +55,17 @@
                 loginPassword = this.$['login-password'].value;
 
                 this.dispatchGlobalEvent('login-attempt', { loginName: loginName, loginPassword: loginPassword });
+            },
+
+            loginResultEventHandler: function(eventArgs) {
+                var data = eventArgs.detail;
+
+                if (data.success) {
+                    this.$['login-box'].style.display = 'none';
+                    this.$['loggedin-box'].style.display = 'block';
+                } else {
+                    this.$['login-box'].setAttribute('class', 'login-not-successful');
+                }
             },
 
             dispatchGlobalEvent: function(eventType, eventArgs) {

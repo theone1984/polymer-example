@@ -16,9 +16,19 @@
     <span class="name">Login-Name</span>
     <span class="password">Passwort</span>
     <span class="submit">Abschicken</span>
+    <span class="loggedin">You are now logged in</span>
 </login-field>
 
 <script>
+    dispatchEvent = function(dispatcherElement, eventType, eventArgs) {
+        var event = new CustomEvent(eventType, {
+            detail: eventArgs,
+            bubbles: true,
+            cancelable: true
+        });
+
+        dispatcherElement.dispatchEvent(event);
+    };
 
     tryLogin = function(loginData, callback) {
         var request = $.post('/login', loginData);
@@ -33,7 +43,7 @@
 
     document.getElementById('login').addEventListener('login-attempt', function(eventArgs) {
         tryLogin(eventArgs.detail, function(result) {
-            alert(result.success ? "Login successful" : "Login not successful");
+            dispatchEvent(document.getElementById('login'), 'loginResult', result);
         });
     });
 </script>

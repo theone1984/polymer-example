@@ -78,19 +78,17 @@ Create hello world text in the element template:
 Create login form template:
 
 ```html
-<div id="login-box">
-    <p>
-        <label for="login-name">Login name:</label>
-        <input type="text" name="login-name" id="login-name" />
-    </p>
-    <p>
-        <label for="login-password">Password:</label>
-        <input type="password" name="login-password" id="login-password" />
-    </p>
-    <p>
-        <button id="login-button">Submit</button>
-    </p>
-</div>
+<p>
+    <label for="login-name">Login name:</label>
+    <input type="text" name="login-name" id="login-name" />
+</p>
+<p>
+    <label for="login-password">Password:</label>
+    <input type="password" name="login-password" id="login-password" />
+</p>
+<p>
+    <button id="login-button">Submit</button>
+</p>
 ```
 
 ** Show the page **
@@ -296,7 +294,7 @@ document.getElementById('login').addEventListener('login-attempt', function(even
 
 Create a function tryLogin() to communicate with the server:
 
-```
+```javascript
 tryLogin = function(loginData, callback) {
     var request = $.post('/login', loginData);
 
@@ -313,7 +311,7 @@ tryLogin = function(loginData, callback) {
 
 Call the tryLogin() function when getting user data:
 
-```
+```javascript
 document.getElementById('login').addEventListener('login-attempt', function(eventArgs) {
     tryLogin(eventArgs.detail, function(result) {
         alert(result.success ? "Login successful" : "Login not successful");
@@ -323,5 +321,85 @@ document.getElementById('login').addEventListener('login-attempt', function(even
 
 **Show the page, enter wrong credentials, show the result, enter correct credential, show the result**
 
+## Advanced event handlers, part II
 
+### Creating the callbacks
 
+Create a method in index.html to send back the login status to the login field:
+
+```javascript
+dispatchEvent = function(dispatcherElement, eventType, eventArgs) {
+    var event = new CustomEvent(eventType, {
+        detail: eventArgs,
+        bubbles: true,
+        cancelable: true
+    });
+
+    dispatcherElement.dispatchEvent(event);
+};
+```
+
+Send back the login result after a login attempt:
+
+```javascript
+tryLogin(eventArgs.detail, function(result) {
+    dispatchEvent(document.getElementById('login'), 'loginResult', result);
+});
+```
+
+In login-field.xml, create a global event listener for the login result event within the ready() method:
+
+```javascript
+this.addEventListener('loginResult', scopedCallback(this, this.loginResultEventHandler));
+```
+
+Within the event handler, log the result:
+
+```javascript
+lognResultEventHandler: function(eventArgs) {
+    var data = eventArgs.detail;
+    console.log(data);
+}
+```
+
+**Show the page, enter wrong credentials, show the result, enter correct credential, show the result**
+
+### Create UI for answer
+
+Add another box to the template in login-field.html:
+
+```html
+<div id="login-box">
+    [like before]
+</div>
+<div id="loggedin-box" style="display: none;">
+    <content select=".loggedin"></content>
+</div>
+```
+
+Add a style rule for failed login attempts (outside of the 'hosts' element):
+
+```css
+.login-not-successful p {
+    color: darkred;
+}
+```
+
+Now, react according to the different outcomes:
+
+```javascript
+if (data.success) {
+    this.$['login-box'].style.display = 'none';
+    this.$['loggedin-box'].style.display = 'block';
+} else {
+    this.$['login-box'].setAttribute('class', 'login-not-successful');
+}
+```
+
+Create the content element for the logged in box in index.html:
+
+```html
+<span class="loggedin">You are now logged in</span>
+```
+
+**Show the page, enter wrong credentials, show the result, enter correct credential, show the result**
