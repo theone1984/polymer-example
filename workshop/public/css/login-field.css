@@ -1,5 +1,9 @@
 @host {
-    login-field {
+    login-field, animated-login-field {
+        position: absolute;
+        left: 0px;
+        display: inline-block;
+
         font-family: 'Muli', sans-serif;
         font-size: 11pt;
     }

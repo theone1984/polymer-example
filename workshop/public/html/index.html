@@ -7,17 +7,18 @@
     <script src="/js/vendor/web-animations.js"></script>
 
     <link rel="import" href="/html/elements/login-field.html">
+    <link rel="import" href="/html/elements/animated-login-field.html">
 </head>
 <body>
 
 <h1>Polymer example</h1>
 
-<login-field id="login" placeholder="Bitte hier tippen ...">
+<animated-login-field id="login" placeholder="Bitte hier tippen ...">
     <span class="name">Login-Name</span>
     <span class="password">Passwort</span>
     <span class="submit">Abschicken</span>
     <span class="loggedin">You are now logged in</span>
-</login-field>
+</animated-login-field>
 
 <script>
     dispatchEvent = function(dispatcherElement, eventType, eventArgs) {

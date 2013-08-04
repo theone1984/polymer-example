@@ -403,3 +403,80 @@ Create the content element for the logged in box in index.html:
 ```
 
 **Show the page, enter wrong credentials, show the result, enter correct credential, show the result**
+
+## Inheritance and web animations
+
+Create a new element 'animated-login-field.html' inherited from login form:
+
+```html
+<element name="animated-login-field" extends="login-field">
+    <script>
+        Polymer.register(this, {
+        });
+    </script>
+</element>
+```
+
+In index.html, load both login forms and use the animated login form instead of the 'normal' login form:
+
+```html
+<link rel="import" href="/html/elements/login-field.html">
+<link rel="import" href="/html/elements/animated-login-field.html">
+...
+<animated-login-field id="login" placeholder="Bitte hier tippen ...">
+   ...
+</animated-login-field>
+```
+
+Change the style definition to include the animated login field:
+
+```css
+login-field, animated-login-field {
+    position: absolute;
+    left: 0px;
+    display: inline-block;
+
+    font-family: 'Muli', sans-serif;
+    font-size: 11pt;
+}
+```
+
+(positional attributes are needed for the animations later)
+
+**Show the page (nothing should have changed)**
+
+Add an animation method:
+
+```javacript
+animateBox: function() {
+    var targetElement = this.$['login-box'];
+
+    document.timeline.play(new Animation(targetElement, {
+        transform: ["scale(1.0f)", "scale(0.0f)"]
+    }, {
+        direction: "alternate", duration: 0.5
+    }));
+}
+```
+
+Overwrite the login result event handler and animate the box on success:
+
+```javascript
+loginResultEventHandler: function(eventArgs) {
+    var data = eventArgs.detail;
+     if (!data.success) {
+        this.super([eventArgs]);
+     } else {
+        this.animateBox();
+     }
+}
+```
+
+Explain that super must be called with an array argument by now.
+
+Drawbacks by now:
+
+* No suitable way to separate HTML and JavaScript by now
+* Web animations do not support chaining
+* Yet another animation framework
+* Some smaller issues

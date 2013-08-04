@@ -1,0 +1,25 @@
+<element name="animated-login-field" extends="login-field">
+    <script>
+        Polymer.register(this, {
+            loginResultEventHandler: function(eventArgs) {
+                var data = eventArgs.detail;
+
+                 if (!data.success) {
+                    this.super([eventArgs]);
+                 } else {
+                    this.animateBox();
+                 }
+            },
+
+            animateBox: function() {
+                var targetElement = this.$['login-box'];
+
+                document.timeline.play(new Animation(targetElement, {
+                    transform: ["scale(1.0f)", "scale(0.0f)"]
+                }, {
+                    direction: "alternate", duration: 0.5
+                }));
+            }
+        });
+    </script>
+</element>
