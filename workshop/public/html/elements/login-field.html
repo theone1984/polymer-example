@@ -9,13 +9,15 @@
         <div id="login-box">
             <p>
                 <label for="login-name">
-                    <content select=".name"></content>:
+                    <content select=".name"></content>
+                    :
                 </label>
                 <input type="text" name="login-name" id="login-name" placeholder="{{placeholder}}"/>
             </p>
             <p>
                 <label for="login-password">
-                    <content select=".password"></content>:
+                    <content select=".password"></content>
+                    :
                 </label>
                 <input type="password" name="login-password" id="login-password" placeholder="{{placeholder}}"/>
             </p>
@@ -28,12 +30,26 @@
     </template>
 
     <script>
+        scopedCallback = function(scope, callback) {
+            return function() {
+                callback.apply(scope, arguments);
+            };
+        };
+
         Polymer.register(this, {
             root: this,
             placeholder: "...",
 
             ready: function() {
+                this.$['login-button'].addEventListener('click', scopedCallback(this, this.buttonClickEventHandler));
+            },
 
+            buttonClickEventHandler: function() {
+                var loginName, loginPassword;
+                loginName = this.$['login-name'].value;
+                loginPassword = this.$['login-password'].value;
+
+                alert("Button clicked with values " + loginName + "/" + loginPassword);
             }
         });
     </script>

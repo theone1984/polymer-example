@@ -222,3 +222,46 @@ Insertion points (content elements) are limited to:
 
 ** Show the page **
 
+## Basic event handlers
+
+Explain this.$
+
+Add scoped callback helper function:
+
+```javascript
+scopedCallback = function(scope, callback) {
+    return function() {
+        callback.apply(scope, arguments);
+    };
+};
+```
+
+(Calls the function within the given scope)
+
+Add an event listener for the login button in login-field.html:
+
+```
+this.$['login-button'].addEventListener('click', scopedCallback(this, this.buttonClickEventHandler));
+```
+
+Add the callback function:
+
+```
+buttonClickEventHandler: function() {
+    alert("Button clicked");
+}
+```
+
+**Show the page, click on the "Abschicken" button**
+
+Within the button clicked event handler, determine the login name and login password and output them:
+
+```javascript
+var loginName, loginPassword;
+loginName = this.$['login-name'].value;
+loginPassword = this.$['login-password'].value;
+alert("Button clicked with values " + loginName + "/" + loginPassword);
+```
+
+**Show the page, enter user/password into the fields and press the button**
+
